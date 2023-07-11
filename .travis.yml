@@ -16,8 +16,8 @@ script:
 #   - echo "Test success"
 
 deploy:
-  provider: elasticbeanstalk
   edge: true
+  provider: elasticbeanstalk
   region: 'ap-northeast-2'
   app: 'docker-react-app'
   env: 'Docker-react-app-env'
