@@ -33,15 +33,17 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          application_name: docker-react-app
-          enviroment_name: Docker-react-app-env
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: ap-northeast-2
+          aws-region: ap-northeast-2
 
       - name: Deploy to Elastic Beanstalk
         run: |
           echo "Deploying to Elastic Beanstalk..."
+          curl -O https://bootstrap.pypa.io/get-pip.py
+          python3 get-pip.py --user
+          pip install awsebcli --upgrade --user
+          export PATH=$PATH:~/.local/bin
           eb init docker-react-app --region ap-northeast-2
           eb setenv CI=true
           eb deploy --staged
